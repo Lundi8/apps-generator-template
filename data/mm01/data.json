@@ -1,0 +1,21 @@
+{
+  "id": "mm01",
+  "global": {
+    "title": {
+      "fr": "Organiser la forêt amazonienne",
+      "en": "Histoire de l'archeologie a therouanne",
+      "es": "Histoire de l'archeologie a therouanne"
+    }
+  },
+
+  "languages": [
+    { "value": "fr", "title": "Français" },
+    { "value": "en", "title": "English" },
+    { "value": "es", "title": "Espanol" }
+  ],
+
+  "pages": [
+    { "url": "/", "component": "Home", "images": [] },
+    { "url": "test", "component": "Test", "images": [] }
+  ]
+}

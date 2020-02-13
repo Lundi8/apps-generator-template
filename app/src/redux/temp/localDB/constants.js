@@ -1,0 +1,4 @@
+export const LOCAL_DB_PENDING = 'LOCAL_DB_PENDING';
+export const LOCAL_DB_STORE = 'LOCAL_DB_STORE';
+export const LOCAL_DB_SUCCESS = 'LOCAL_DB_SUCCESS';
+export const LOCAL_DB_ERROR = 'LOCAL_DB_ERROR';
