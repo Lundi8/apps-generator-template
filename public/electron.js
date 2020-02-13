@@ -28,9 +28,6 @@ const createWindow = async () => {
     webPreferences: {
       nodeIntegration: false,
       preload: preload.load(),
-      // preload: join(app.getAppPath(), 'public', 'electron', 'preload.js'),
-      // preload: `file://${join(__dirname, '../build/config/preload.js')}`,
-      // preload: join(__dirname, 'public', 'electron', 'preload.js'),
     },
   });
 
