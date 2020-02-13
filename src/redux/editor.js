@@ -1,11 +1,11 @@
 const SET_EDIT_MODE = 'SET_EDIT_MODE';
 
-export const setEditMode = (str = '') => ({
+export const setEditMode = (bool = false) => ({
   type: SET_EDIT_MODE,
-  payload: str,
+  payload: bool,
 });
 
-export default (state = '', action) => {
+export default (state = false, action) => {
   switch (action.type) {
     case SET_EDIT_MODE:
       return action.payload;

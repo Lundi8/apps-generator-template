@@ -15,7 +15,7 @@
   ],
 
   "pages": [
-    { "url": "/", "component": "Home", "images": [] },
-    { "url": "test", "component": "Test", "images": [] }
+    { "url": "/", "component": "Home", "images": [], "bippbpi": { "fr": "blop" } },
+    { "url": "test", "component": "Test", "daf": "sdf", "images": [], "cbccff": { "fr": "blop" } }
   ]
 }

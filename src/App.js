@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setEditMode, setId, setLanguages, setPages, setGlobal } from './redux';
 import { JSONdata } from './utils';
-import CMS from './pages/CMS';
-const MhnmApp = React.lazy(() => import(`./apps/${process.env.REACT_APP_MHNM_ID}`));
+import Editor from './pages/Editor';
 
-console.log(process.env);
+const AppID = React.lazy(() => import(`./apps/${process.env.REACT_APP_ID}`));
+// import AppID from './apps/mm01';
 
-const App = ({ setEditMode, setId, setLanguages, setPages, setGlobal }) => {
+if (process.env.NODE_ENV !== 'production') console.log(process.env);
+
+const App = ({ editor, setEditMode, setId, setLanguages, setPages, setGlobal }) => {
+  /**
+   * DATA
+   * grab data from electron
+   */
   const [init, setInit] = useState(false);
 
   useEffect(() => {
-    window.ipcRenderer.on('data', (evt, data) => {
-      JSONdata.checkKeys(data);
+    const ipcListener = (evt, data) => {
       setLanguages(data.languages);
       setPages(data.pages);
       setGlobal(data.global);
       setId(data.id);
       setInit(true);
-    });
+    };
+    window.ipcRenderer.on('data', ipcListener);
+    return () => window.ipcRenderer.removeListener('data', ipcListener);
   });
 
   useEffect(() => {
@@ -30,31 +37,42 @@ const App = ({ setEditMode, setId, setLanguages, setPages, setGlobal }) => {
     return () => clearTimeout(fireInit);
   });
 
-  useEffect(() => {
-    window.ipcRenderer.on('edit mode', () => {
-      setEditMode('edit mode');
-    });
-  });
+  /**
+   * EDITOR
+   * activate edit mode or go to editor
+   */
+  const history = useHistory();
 
   useEffect(() => {
-    window.ipcRenderer.on('editor mode', () => {
-      setEditMode('editor mode');
-    });
-  });
+    const ipcListener = () => {
+      if (!history.location.pathname.match(/editor$/)) history.push('/editor');
+      else history.push('/');
+    };
+
+    window.ipcRenderer.on('editor', ipcListener);
+    return () => window.ipcRenderer.removeListener('editor', ipcListener);
+  }, [history]);
+
+  useEffect(() => {
+    const ipcListener = () => setEditMode(!editor);
+    window.ipcRenderer.on('edit-mode', ipcListener);
+    return () => window.ipcRenderer.removeListener('edit-mode', ipcListener);
+  }, [editor]);
 
   return (
     <Switch>
-      <React.Suspense fallback={<div>Loading app "{process.env.REACT_APP_MHNM_ID}"...</div>}>
-        <MhnmApp />
+      <React.Suspense fallback={<div>Loading app "{process.env.REACT_APP_ID}"...</div>}>
+        <React.Fragment>
+          <AppID />
+          <Route exact path='/editor' component={Editor} />
+        </React.Fragment>
       </React.Suspense>
-      <Route exact path='/cms' component={CMS} />
     </Switch>
   );
 };
 
-const mS2P = state => {
-  console.log(state);
-  const { editor } = state;
+const mapSTP = ({ editor, page }) => {
+  console.log(JSONdata.flatten('/pages', page.data));
   return { editor };
 };
-export default connect(null, { setEditMode, setId, setLanguages, setPages, setGlobal })(App);
+export default connect(mapSTP, { setEditMode, setId, setLanguages, setPages, setGlobal })(App);

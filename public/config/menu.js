@@ -1,5 +1,6 @@
 const { Menu, shell } = require('electron');
 const store = require('./store');
+const isDev = require('./isDev');
 
 const template = [
   {
@@ -26,11 +27,21 @@ const template = [
         accelerator: 'Ctrl+R',
         click: async (itm, win) => {
           await win.webContents.reload();
-          const data = await store();
+          const data = await store.data();
           win.webContents.send('data', data);
         },
       },
-
+      {
+        label: '&Restart',
+        accelerator: 'F5',
+        click: async (itm, win) => {
+          await win.loadURL(
+            isDev ? 'http://localhost:3001' : `file://${join(__dirname, '../build/index.html')}`,
+          );
+          const data = await store.data();
+          win.webContents.send('data', data);
+        },
+      },
       {
         label: 'Toggle &Developer Tools',
         accelerator: 'Alt+Ctrl+I',
@@ -47,14 +58,17 @@ const template = [
       },
       {
         label: 'Switch Edit Mode',
+        accelerator: 'F2',
+
         click: (itm, win) => {
-          win.webContents.send('edit mode');
+          win.webContents.send('edit-mode');
         },
       },
       {
-        label: 'Switch Editor mode',
+        label: 'Switch Editor',
+        accelerator: 'F3',
         click: (itm, win) => {
-          win.webContents.send('editor mode', null);
+          win.webContents.send('editor');
         },
       },
     ],

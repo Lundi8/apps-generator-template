@@ -54,7 +54,7 @@ app.on('activate', () => {
   if (mainWindow === null) createWindow();
 });
 
-log({ appName: process.env.REACT_APP_MHNM_ID });
+log({ appName: process.env.REACT_APP_ID });
 log({ 'app.getAppPath()': app.getAppPath() });
 log({ 'app.getPath(appData)': app.getPath('appData') });
 log({ 'app.getPath(userData)': app.getPath('userData') });

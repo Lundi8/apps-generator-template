@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const { join } = require('path');
 const { app } = require('electron');
-const appName = process.env.REACT_APP_MHNM_ID;
+const appName = process.env.REACT_APP_ID;
 
 const _stringify = data => JSON.stringify(data);
 const _parse = data => JSON.parse(data);
@@ -17,12 +17,13 @@ const _getRemoteData = async () => _parse(await fs.readFile(_getRemotePath(appNa
   if (!fs.existsSync(remotePath)) await fs.writeFile(remotePath, _stringify(appData), 'utf8');
 
   const remoteData = await _getRemoteData(appName);
-  await fs.writeFile(remotePath, _stringify({ ...appData, ...remoteData }), 'utf8');
+  await fs.writeFile(remotePath, _stringify({ ...remoteData, ...appData }), 'utf8');
   return;
 })();
 
 module.exports.data = async () => {
   try {
+    // return await fs.readFile(_getRemotePath(appName), 'utf8');
     return await _getRemoteData();
   } catch (err) {
     console.error(err);

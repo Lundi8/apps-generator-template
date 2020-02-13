@@ -4,7 +4,7 @@ const { join } = require('path');
 const log = require('./public/config/log');
 
 const APPIDS = ['mm01', 'mm02'];
-const ID = process.env.REACT_APP_MHNM_ID;
+const ID = process.env.REACT_APP_ID;
 const rootFilePath = join(process.cwd(), 'public');
 const appFilePath = join(process.cwd(), 'public', ID);
 const remoteFilePath = join(process.cwd(), 'data', ID);

@@ -2,7 +2,7 @@ const SET_PAGES = 'SET_PAGES';
 const SET_PAGE = 'SET_PAGE';
 const initialState = {
   current: '/',
-  page: {},
+  data: [],
 };
 
 export const setPages = obj => ({
@@ -18,7 +18,7 @@ export const setPage = str => ({
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PAGES:
-      return { ...state, ...action.payload };
+      return { ...state, data: action.payload };
     case SET_PAGE:
       return { ...state, current: action.payload };
     default:

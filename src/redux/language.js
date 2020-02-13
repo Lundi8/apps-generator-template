@@ -2,7 +2,7 @@ const SET_LANGUAGES = 'SET_LANGUAGES';
 const SET_LANGUAGE = 'SET_LANGUAGE';
 const initialState = {
   current: 'fr',
-  languages: [],
+  data: [],
 };
 
 export const setLanguages = obj => ({
@@ -18,7 +18,7 @@ export const setLanguage = str => ({
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_LANGUAGES:
-      return { ...state, languages: action.payload };
+      return { ...state, data: action.payload };
     case SET_LANGUAGE:
       return { ...state, current: action.payload };
     default:

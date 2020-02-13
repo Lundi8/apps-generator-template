@@ -1,5 +1,7 @@
 const SET_GLOBAL = 'SET_GLOBAL';
-const initialState = {};
+const initialState = {
+  data: {},
+};
 
 export const setGlobal = obj => ({
   type: SET_GLOBAL,
@@ -9,7 +11,7 @@ export const setGlobal = obj => ({
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_GLOBAL:
-      return { ...state, ...action.payload };
+      return { ...state, data: action.payload };
     default:
       return state;
   }
