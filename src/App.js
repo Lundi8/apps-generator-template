@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setEditMode, setId, setLanguages, setPages, setGlobal } from './redux';
-import { JSONdata } from './utils';
 import Editor from './pages/Editor';
 
 const AppID = React.lazy(() => import(`./apps/${process.env.REACT_APP_ID}`));
@@ -71,8 +70,7 @@ const App = ({ editor, setEditMode, setId, setLanguages, setPages, setGlobal }) 
   );
 };
 
-const mapSTP = ({ editor, page }) => {
-  console.log(JSONdata.flatten('/pages', page.data));
+const mapSTP = ({ editor }) => {
   return { editor };
 };
 export default connect(mapSTP, { setEditMode, setId, setLanguages, setPages, setGlobal })(App);
