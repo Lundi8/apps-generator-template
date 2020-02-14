@@ -1,22 +1,18 @@
 require('dotenv').config();
 const { app, BrowserWindow } = require('electron');
 const { join } = require('path');
-const isDev = require('./config/isDev');
-const menu = require('./config/menu');
-const log = require('./config/log');
-const store = require('./config/store');
-const ipc = require('./config/ipc');
-const preload = require('./config/preload');
+const { isDev, menu, log, store, ipc, preload } = require('./config');
 
 if (require('electron-squirrel-startup')) app.quit();
 
-let mainWindow;
+let window;
 const createWindow = async () => {
   await preload.init();
+  await store.init();
   menu.init(isDev);
   ipc.init();
 
-  mainWindow = new BrowserWindow({
+  window = new BrowserWindow({
     x: isDev ? 1920 : 0,
     y: 0,
     maximizable: true,
@@ -31,17 +27,17 @@ const createWindow = async () => {
     },
   });
 
-  if (isDev) mainWindow.webContents.openDevTools();
+  if (isDev) window.webContents.openDevTools();
 
-  await mainWindow.loadURL(
+  await window.loadURL(
     isDev ? 'http://localhost:3001' : `file://${join(__dirname, '../build/index.html')}`,
   );
 
   const data = await store.data();
-  mainWindow.webContents.send('data', data);
+  window.webContents.send('data', data);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  window.on('closed', () => {
+    window = null;
   });
 };
 
@@ -51,7 +47,7 @@ app.on('error', err => console.error(err));
 app.on('window-all-closed', () => app.quit());
 app.on('will-quit', () => app.exit(0));
 app.on('activate', () => {
-  if (mainWindow === null) createWindow();
+  if (window === null) createWindow();
 });
 
 log({ appName: process.env.REACT_APP_ID });

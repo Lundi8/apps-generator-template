@@ -29,7 +29,7 @@ class JSONdata {
   }
 
   model({ index, path, value }) {
-    return { index, path, value, type: typeOf(value), language: this.addLanguage(path) };
+    return { index, path, type: typeOf(value), language: this.addLanguage(path), value };
   }
 
   check() {

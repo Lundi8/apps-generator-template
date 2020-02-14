@@ -1,7 +1,7 @@
 import React from 'react';
-import DataTables from '../components/DataTables';
+import DataTables from './components/Table';
 import { connect } from 'react-redux';
-import { JSONdata } from '../utils';
+import { JSONdata } from '../../utils';
 import { Container, Typography, Divider } from '@material-ui/core';
 
 const Editor = ({ dataList = [] }) => {
@@ -12,7 +12,7 @@ const Editor = ({ dataList = [] }) => {
         Global data
       </Typography>
       <Divider />
-      <DataTables dataList={dataList} fieldList={['index', 'path', 'type', 'language', 'value']} />
+      <DataTables dataList={dataList} editList={['value']} />
     </Container>
   );
 };

@@ -56,7 +56,7 @@ const App = ({ editor, setEditMode, setId, setLanguages, setPages, setGlobal }) 
     const ipcListener = () => setEditMode(!editor);
     window.ipcRenderer.on('edit-mode', ipcListener);
     return () => window.ipcRenderer.removeListener('edit-mode', ipcListener);
-  }, [editor]);
+  }, [editor, setEditMode]);
 
   return (
     <Switch>

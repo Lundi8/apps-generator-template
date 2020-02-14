@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { path } from '../../utils';
 import Container from './components/Container';
 
@@ -7,9 +7,9 @@ const View1 = () => {
   return (
     <div>
       <p>1 public folder</p>
-      <img style={{ width: '100px' }} src={`${process.env.PUBLIC_URL}/img.png`}></img>
+      <img style={{ width: '100px' }} src={`${process.env.PUBLIC_URL}/img.png`} alt='not found'></img>
       <p>2 webpack import</p>
-      <img style={{ width: '100px' }} src={path.imgs('img.png')}></img>
+      <img style={{ width: '100px' }} src={path.imgs('img.png')} alt='not found'></img>
     </div>
   );
 };
@@ -18,7 +18,7 @@ const View2 = () => {
     <div>
       <h2>View2</h2>
       <p>2 webpack import</p>
-      <img style={{ width: '100px' }} src={path.imgs('img.png')}></img>
+      <img style={{ width: '100px' }} src={path.imgs('img.png')} alt='not found'></img>
     </div>
   );
 };

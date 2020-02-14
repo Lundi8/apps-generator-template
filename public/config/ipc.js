@@ -6,8 +6,16 @@ module.exports.init = () => {
     const data = await store.data();
     evt.reply('data', data);
   });
+
   ipcMain.on('update-data', async (evt, { path, data }) => {
-    // const data = await store(path, data);
-    // evt.reply('data', data);
+    let res = {};
+    try {
+      await store.replace({ path, data });
+      res.success = true;
+    } catch (err) {
+      res.success = false;
+      res.error = err;
+    }
+    evt.reply('update-data', res);
   });
 };
