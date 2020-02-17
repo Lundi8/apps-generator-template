@@ -32,14 +32,14 @@ function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-export default ({ dataList = [], editList = [] }) => {
+export default ({ dataList = [] }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
-  const [open, setOpen] = React.useState(false);
-  const [editable, setEditable] = React.useState(dataList[0] ? dataList[0] : {});
+  // const [open, setOpen] = React.useState(false);
+  const [editable, setEditable] = React.useState({ open: false });
 
   const handleRequestSort = (event, property) => {
     const isDesc = orderBy === property && order === 'desc';
@@ -53,12 +53,10 @@ export default ({ dataList = [], editList = [] }) => {
   };
 
   const handleEditable = obj => evt => {
-    console.log(obj);
-    setEditable(obj);
-    setOpen(true);
+    setEditable({ ...obj, open: true });
   };
-  const handleClose = evt => {
-    setOpen(false);
+  const handleClose = obj => {
+    setEditable({ open: false });
   };
 
   if (!dataList.length) {
@@ -97,16 +95,7 @@ export default ({ dataList = [], editList = [] }) => {
                     onClick={handleEditable(row)}
                   >
                     {columns.map((column, iCol) => {
-                      return (
-                        <TableCell
-                          key={method.keygen()}
-                          value={row[column]}
-                          row={iRow}
-                          // column={iCol}
-                          // enabled={a.row !== iRow && edit.col !== iCol && edit.value}
-                          // isEditable={editList.includes(column)}
-                        />
-                      );
+                      return <TableCell key={method.keygen()} value={row[column]} row={iRow} />;
                     })}
                   </TableRow>
                 );
@@ -121,7 +110,15 @@ export default ({ dataList = [], editList = [] }) => {
         onPage={setPage}
         onRowsPerPage={handleChangeRowsPerPage}
       />
-      <EditableData {...editable} open={open} onclose={handleClose} />
+      <EditableData
+        // path={editable.path}
+        // value={editable.value}
+        // language={editable.language}
+        // type={editable.type}
+        // open={editable.open}
+        {...editable}
+        onclose={handleClose}
+      />
     </ContainerRounded>
   );
 };

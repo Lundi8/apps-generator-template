@@ -24,12 +24,14 @@ class JSONdata {
 
   get toEditor() {
     this.flatten();
-    // this.filterByLanguages();
+    this.filterByLanguages();
+    this.index();
+
     return this._arr;
   }
 
   model({ index, path, value }) {
-    return { index, path, type: typeOf(value), language: this.addLanguage(path), value };
+    return { index, path, json_type: typeOf(value), language: this.addLanguage(path), value };
   }
 
   check() {
@@ -48,6 +50,11 @@ class JSONdata {
     }
   }
 
+  index() {
+    this._arr.forEach((item, i) => (item.index = i));
+    return this;
+  }
+
   flatten() {
     const reduce = (val, route = '') => {
       if (typeOf(val) === 'object') {
@@ -63,7 +70,7 @@ class JSONdata {
   }
 
   filterByLanguages() {
-    this._arr.filter(obj => obj.path.match(lg) || obj.path.match(lgList));
+    this._arr = this._arr.filter(obj => obj.path.match(lg) || obj.path.match(lgList));
     return this;
   }
 }
@@ -74,34 +81,3 @@ const factory = ({ json = {}, root = '' }) => {
 };
 
 export default factory;
-
-// const lg = new RegExp(`${reg}$`);
-// const lglist = new RegExp(`${reg}\\/[0-9]$`);
-// return arr.filter(obj => obj.path.match(/\/(fr|en|es)$/) || obj.path.match(/\/(fr|en|es)\/[0-9]$/));
-
-// function find(data, route) {
-//   let properties = route.split('/');
-//   let currentObj = data;
-//   for (let i = 0; i < properties.length; i++) {
-//     if (!isNaN(parseInt(properties[i], 10))) {
-//       properties[i] = properties[i] * 1;
-//     }
-//     if (currentObj[properties[i]] !== undefined) {
-//       currentObj = currentObj[properties[i]];
-//     }
-//   }
-
-//   let key = {
-//     name: properties[properties.length - 1],
-//     type: typeOf(currentObj),
-//   };
-//   return {
-//     data: currentObj,
-//     disabled: false,
-//     disabledEdit: true,
-//     visible: true,
-//     key,
-//     keys: properties,
-//     route,
-//   };
-// }

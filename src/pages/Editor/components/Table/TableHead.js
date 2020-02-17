@@ -20,11 +20,12 @@ export default ({ order, orderBy, onRequestSort, columns }) => {
     <TableHead>
       <TableRow>
         {columns.map(column => {
-          return column === 'id' ? null : (
+          return (
             <TableCell
               key={method.keygen()}
               className={classes.head}
               sortDirection={orderBy === column ? order : false}
+              style={{ width: column === 'value' ? '100%' : 0 }}
             >
               <TableSortLabel
                 active={orderBy === column}

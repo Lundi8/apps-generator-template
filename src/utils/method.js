@@ -5,6 +5,17 @@ export const typeOf = obj => {
     .toLowerCase();
 };
 
+// export const htmlTypeOf = val => {
+//   switch (typeOf(val)) {
+//     case 'number':
+//       return 'number';
+//     case 'string':
+//       return 'text';
+//     case 'boolean':
+//       return 'text';
+//   }
+// };
+
 export const keygen = str => {
   return `${str}_${Date.now()}${performance
     .now()

@@ -12,9 +12,10 @@ module.exports.init = () => {
     try {
       await store.replace({ path, data });
       res.success = true;
+      res.message = `update successfully, new data : ${data}`;
     } catch (err) {
       res.success = false;
-      res.error = err;
+      res.message = err;
     }
     evt.reply('update-data', res);
   });
