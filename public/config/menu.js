@@ -1,6 +1,7 @@
-const { Menu, shell } = require('electron');
+const { Menu, shell, BrowserWindow } = require('electron');
 const store = require('./store');
 const isDev = require('./isDev');
+const preload = require('./preload');
 
 const template = [
   {
@@ -74,33 +75,23 @@ const template = [
     ],
   },
   {
-    label: 'Help',
-    submenu: [
-      {
-        label: 'Learn More',
-        click() {
-          shell.openExternal('http://electron.atom.io');
+    label: 'About',
+    click() {
+      let win = new BrowserWindow({
+        width: 500,
+        height: 300,
+        frame: false,
+        center: true,
+        webPreferences: {
+          nodeIntegration: false,
+          preload: preload.load(),
         },
-      },
-      {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        },
-      },
-      {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        },
-      },
-      {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
-        },
-      },
-    ],
+      });
+
+      win.loadURL(
+        isDev ? 'http://localhost:3001/about.html' : `file://${join(__dirname, '../build/about.html')}`,
+      );
+    },
   },
 ];
 

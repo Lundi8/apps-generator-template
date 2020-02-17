@@ -5,7 +5,7 @@ const { app } = require('electron');
 module.exports.init = async () => {
   await writeFile(
     join(app.getPath('userData'), 'preload.js'),
-    "const { ipcRenderer } = require('electron');window.ipcRenderer = ipcRenderer;",
+    "const { ipcRenderer, remote } = require('electron');window.ipcRenderer = ipcRenderer;window.electron_remote = remote;",
     'utf8',
   );
 };
