@@ -5,8 +5,10 @@ import { TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/cor
 
 const useStyles = makeStyles(theme => ({
   head: {
-    // background: theme.palette.primary.main,
+    fontWeight: 'bold',
+    whiteSpace: 'nowrap',
     textTransform: 'capitalize',
+    color: theme.palette.text.primary,
   },
 }));
 

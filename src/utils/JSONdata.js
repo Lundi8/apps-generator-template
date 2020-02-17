@@ -31,7 +31,7 @@ class JSONdata {
   }
 
   model({ index, path, value }) {
-    return { index, path, json_type: typeOf(value), language: this.addLanguage(path), value };
+    return { index, json_path: path, json_type: typeOf(value), language: this.addLanguage(path), value };
   }
 
   check() {
@@ -70,7 +70,7 @@ class JSONdata {
   }
 
   filterByLanguages() {
-    this._arr = this._arr.filter(obj => obj.path.match(lg) || obj.path.match(lgList));
+    this._arr = this._arr.filter(obj => obj.json_path.match(lg) || obj.json_path.match(lgList));
     return this;
   }
 }

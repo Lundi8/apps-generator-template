@@ -1,7 +1,8 @@
 const fs = require('fs-extra');
 const { join } = require('path');
 const { app } = require('electron');
-const { deepChange, deepChange2 } = require('./utils');
+const { deepChange } = require('./utils');
+// const isDev = require('./isDev');
 const appName = process.env.REACT_APP_ID;
 
 const _stringify = data => JSON.stringify(data);
@@ -20,11 +21,13 @@ module.exports.init = async () => {
   const remotePath = _getRemotePath();
 
   if (!fs.existsSync(remotePath)) await fs.writeFile(remotePath, _stringify(appData), 'utf8');
+  // if (isDev) {
   try {
     await _setRemoteData(appData);
   } catch (err) {
     console.error(err);
   }
+  // }
   return;
 };
 

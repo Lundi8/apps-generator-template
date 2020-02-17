@@ -7,9 +7,17 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
 } from '@material-ui/core';
 
-export default ({ path = '', value = '', language = '', type = '', open = false, onclose }) => {
+export default ({
+  json_path = '',
+  value = '',
+  language = '',
+  json_type = '',
+  open = false,
+  onclose,
+}) => {
   const [inputValue, setInputValue] = useState(value || '');
   let inputRows = value.match(/\n/);
   inputRows = inputRows ? inputRows.index : 0;
@@ -28,25 +36,26 @@ export default ({ path = '', value = '', language = '', type = '', open = false,
   return (
     <div>
       <Dialog open={open} onClose={onclose} maxWidth='md' fullWidth={true}>
-        <DialogTitle id='form-dialog-title'>Value</DialogTitle>
+        <DialogTitle id='form-dialog-title'>Update the current value</DialogTitle>
         <DialogContent>
-          <DialogContentText style={{ whiteSpace: 'pre-line' }}>
-            Language : {language} <br />
-            Type : {type} <br />
-            Path : {path} <br />
-            Value : {value}
+          <DialogContentText>
+            <b>Value</b> : {value} <br />
+            <b>Language </b>: {language} <br />
+            <b>JSON Type </b>: {json_type} <br />
+            <b>JSON Path </b>: {json_path} <br />
           </DialogContentText>
+          <Divider /> <br />
           <TextField
             autoFocus
+            fullWidth
             margin='dense'
-            id='name'
+            id='change-value'
             label='Change value'
             type='text'
             value={inputValue}
-            onChange={evt => setInputValue(evt.target.value)}
-            fullWidth
             rows={inputRows}
-            multiline={inputRows ? true : false}
+            multiline
+            onChange={evt => setInputValue(evt.target.value)}
           />
         </DialogContent>
         <DialogActions>
@@ -56,8 +65,7 @@ export default ({ path = '', value = '', language = '', type = '', open = false,
           <Button
             onClick={evt => {
               if (value === inputValue) return;
-              // console.log(JSON.stringify(inputValue), inputValue);
-              window.ipcRenderer.send('update-data', { path, data: inputValue });
+              window.ipcRenderer.send('update-data', { path: json_path, data: inputValue });
             }}
             color='primary'
           >

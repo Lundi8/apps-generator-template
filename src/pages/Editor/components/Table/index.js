@@ -38,7 +38,6 @@ export default ({ dataList = [] }) => {
   const [orderBy, setOrderBy] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
-  // const [open, setOpen] = React.useState(false);
   const [editable, setEditable] = React.useState({ open: false });
 
   const handleRequestSort = (event, property) => {
@@ -63,7 +62,7 @@ export default ({ dataList = [] }) => {
     return (
       <ContainerRounded m={6}>
         <div className={classes.empty}>
-          <Typography color='error'>No data available yet...</Typography>
+          <Typography color='primary'>Loading data...</Typography>
         </div>
       </ContainerRounded>
     );
@@ -110,15 +109,7 @@ export default ({ dataList = [] }) => {
         onPage={setPage}
         onRowsPerPage={handleChangeRowsPerPage}
       />
-      <EditableData
-        // path={editable.path}
-        // value={editable.value}
-        // language={editable.language}
-        // type={editable.type}
-        // open={editable.open}
-        {...editable}
-        onclose={handleClose}
-      />
+      <EditableData {...editable} onclose={handleClose} />
     </ContainerRounded>
   );
 };

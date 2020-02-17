@@ -16,7 +16,14 @@
   ],
 
   "pages": [
-    { "url": "/", "component": "Home", "images": [], "para": { "fr": "blop\n fjsddddjf\n sdffff" } },
+    {
+      "url": "/",
+      "component": "Home",
+      "bool": true,
+      "num": 23,
+      "images": [],
+      "para": { "fr": "text\n in\n paragraph", "en": "simple text" }
+    },
     { "url": "test", "component": "Test", "daf": "sdf", "images": [], "temp": { "fr": "blop/test" } }
   ]
 }
