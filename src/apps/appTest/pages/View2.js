@@ -5,7 +5,7 @@ import { path } from '../../../utils';
 import { Background } from '../../../components';
 import Draggable from 'react-draggable';
 
-const View2 = ({ setApp, stateApp1 }) => {
+const View2 = ({ setApp, appReducer }) => {
   const [origin, setOrigin] = useState({ x: 100, y: 100 });
   const destination = { x: 600, y: 0 };
   const ratio = 20;
@@ -30,7 +30,7 @@ const View2 = ({ setApp, stateApp1 }) => {
       <h2>View2</h2>
       <div style={{ border: 'solid' }}>
         <button onClick={() => setApp('Blop APP')}>Redux test</button>
-        <p>stateApp1 : {stateApp1}</p>
+        <p>appReducer : {appReducer}</p>
       </div>
       <Draggable
         axis='both'
@@ -67,8 +67,8 @@ const View2 = ({ setApp, stateApp1 }) => {
   );
 };
 
-const mSTP = ({ stateApp1 }) => {
-  return { stateApp1 };
+const mSTP = ({ appReducer }) => {
+  return { appReducer };
 };
 
 export default connect(mSTP, { setApp })(View2);

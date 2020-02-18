@@ -22,7 +22,7 @@ export const history = createHistory({
 //   );
 // };
 export const store = async initialState => {
-  const app = await import(`../apps/${process.env.REACT_APP_ID}/redux/reducers`);
+  const app = (await import(`../apps/${process.env.REACT_APP_ID}/redux`)).default;
 
   return createStore(
     combineReducers({ id, editor, language, global, page, ...app, router: connectRouter(history) }),
