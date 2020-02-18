@@ -1,4 +1,4 @@
-const { Menu, shell, BrowserWindow } = require('electron');
+const { Menu, BrowserWindow } = require('electron');
 const store = require('./store');
 const isDev = require('./isDev');
 const preload = require('./preload');

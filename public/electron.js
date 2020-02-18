@@ -2,14 +2,24 @@ require('dotenv').config();
 const { app, BrowserWindow } = require('electron');
 const { join } = require('path');
 const { isDev, menu, log, store, ipc, preload } = require('./config');
-
+const unhandled = require('electron-unhandled');
+const appId = process.env.REACT_APP_ID;
 if (require('electron-squirrel-startup')) app.quit();
 
+unhandled();
 let window;
 const createWindow = async () => {
-  await preload.init();
-  await store.init();
-  menu.init(isDev);
+  try {
+    await preload.init();
+  } catch (err) {
+    console.error(err);
+  }
+  try {
+    await store.init(appId);
+  } catch (err) {
+    console.error(err);
+  }
+  menu.init();
   ipc.init();
 
   window = new BrowserWindow({
@@ -50,7 +60,7 @@ app.on('activate', () => {
   if (window === null) createWindow();
 });
 
-log({ appName: process.env.REACT_APP_ID });
+log({ appId });
 log({ 'app.getAppPath()': app.getAppPath() });
 log({ 'app.getPath(appData)': app.getPath('appData') });
 log({ 'app.getPath(userData)': app.getPath('userData') });
